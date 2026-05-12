@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Validador de Autómatas APE 04</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="background-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <main class="container glass">
+        <header>
+            <h1>Autómatas APE 04</h1>
+            <p>Validador de secuencias — Autómatas Finitos Deterministas (AFD)</p>
+        </header>
+
+        <div class="tabs">
+            <button class="tab-btn active" data-target="ids" id="tab-ids">⚡ Ej 6: IDS</button>
+            <button class="tab-btn" data-target="iot" id="tab-iot">📡 Ej 7: IoT</button>
+            <button class="tab-btn" data-target="bio" id="tab-bio">🧬 Ej 8: Genética</button>
+        </div>
+
+        <!-- ========== EJERCICIO 6: IDS ========== -->
+        <section id="ids" class="tab-content active">
+            <h2>Detección de Patrones de Ataque (IDS)</h2>
+            <p class="description">Patrón: <code>SYN ACK<sup>+</sup> RST</code></p>
+
+            <!-- Diagrama SVG -->
+            <div class="diagram-card">
+                <h3>Diagrama AFD</h3>
+                <div class="svg-wrapper" id="diagram-ids">
+                    <!-- Generado por app.js -->
+                </div>
+            </div>
+
+            <!-- Tablas de Transición (colapsables) -->
+            <details class="tables-details">
+                <summary>Ver Tablas de Transición (6)</summary>
+                <div class="tables-row">
+                    <div class="table-card">
+                        <h3>Tabla AFND</h3>
+                        <table>
+                            <thead><tr><th></th><th>SYN</th><th>ACK</th><th>RST</th></tr></thead>
+                            <tbody>
+                                <tr><th class="row-header">→ q0</th><td>{q1}</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">q1</th><td>∅</td><td>{q2}</td><td>∅</td></tr>
+                                <tr><th class="row-header">q2</th><td>∅</td><td>{q2}</td><td>{q3}</td></tr>
+                                <tr class="accept-row"><th class="row-header accept-header">* q3</th><td>∅</td><td>∅</td><td>∅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-card">
+                        <h3>Tabla AFD</h3>
+                        <table>
+                            <thead><tr><th></th><th>SYN</th><th>ACK</th><th>RST</th></tr></thead>
+                            <tbody>
+                                <tr><th class="row-header">→ A</th><td>B</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">B</th><td>∅</td><td>C</td><td>∅</td></tr>
+                                <tr><th class="row-header">C</th><td>∅</td><td>C</td><td>D</td></tr>
+                                <tr class="accept-row"><th class="row-header accept-header">* D</th><td>∅</td><td>∅</td><td>∅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </details>
+
+            <!-- Ejemplos -->
+            <div class="examples-section">
+                <h3>Ejemplos</h3>
+                <div class="examples-grid">
+                    <button class="example-btn valid-example" onclick="setExample('input-ids','SYN,ACK,RST')">✅ SYN, ACK, RST</button>
+                    <button class="example-btn valid-example" onclick="setExample('input-ids','SYN,ACK,ACK,RST')">✅ SYN, ACK, ACK, RST</button>
+                    <button class="example-btn valid-example" onclick="setExample('input-ids','SYN,ACK,ACK,ACK,RST')">✅ SYN, ACK×3, RST</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-ids','SYN,RST')">❌ SYN, RST (sin ACK)</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-ids','ACK,RST')">❌ ACK, RST (sin SYN)</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-ids','SYN,ACK')">❌ SYN, ACK (sin RST)</button>
+                </div>
+            </div>
+
+            <!-- Input -->
+            <div class="input-group">
+                <input type="text" id="input-ids" placeholder="Ej: SYN, ACK, RST" autocomplete="off">
+                <button class="validate-btn" onclick="validate('ids', 'input-ids')">Validar</button>
+            </div>
+            <div id="result-ids" class="result"></div>
+        </section>
+
+        <!-- ========== EJERCICIO 7: IoT ========== -->
+        <section id="iot" class="tab-content">
+            <h2>Validación de Telemetría IoT</h2>
+            <p class="description">Patrón: <code>HDR (TEMP | HUM)* CRC</code></p>
+
+            <div class="diagram-card">
+                <h3>Diagrama AFD</h3>
+                <div class="svg-wrapper" id="diagram-iot"></div>
+            </div>
+
+            <details class="tables-details">
+                <summary>Ver Tablas de Transición (7)</summary>
+                <div class="tables-row">
+                    <div class="table-card">
+                        <h3>Tabla AFND</h3>
+                        <table>
+                            <thead><tr><th></th><th>HDR</th><th>TEMP</th><th>HUM</th><th>CRC</th></tr></thead>
+                            <tbody>
+                                <tr><th class="row-header">→ q0</th><td>{q1}</td><td>∅</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">q1</th><td>∅</td><td>{q2}</td><td>{q2}</td><td>{q3}</td></tr>
+                                <tr><th class="row-header">q2</th><td>∅</td><td>{q2}</td><td>{q2}</td><td>{q3}</td></tr>
+                                <tr class="accept-row"><th class="row-header accept-header">* q3</th><td>∅</td><td>∅</td><td>∅</td><td>∅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-card">
+                        <h3>Tabla AFD</h3>
+                        <table>
+                            <thead><tr><th></th><th>HDR</th><th>T/H</th><th>CRC</th></tr></thead>
+                            <tbody>
+                                <tr><th class="row-header">→ A</th><td>B</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">B</th><td>∅</td><td>C</td><td>D</td></tr>
+                                <tr><th class="row-header">C</th><td>∅</td><td>C</td><td>D</td></tr>
+                                <tr class="accept-row"><th class="row-header accept-header">* D</th><td>∅</td><td>∅</td><td>∅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </details>
+
+            <div class="examples-section">
+                <h3>Ejemplos</h3>
+                <div class="examples-grid">
+                    <button class="example-btn valid-example" onclick="setExample('input-iot','HDR,CRC')">✅ HDR, CRC</button>
+                    <button class="example-btn valid-example" onclick="setExample('input-iot','HDR,TEMP,CRC')">✅ HDR, TEMP, CRC</button>
+                    <button class="example-btn valid-example" onclick="setExample('input-iot','HDR,TEMP,HUM,CRC')">✅ HDR, TEMP, HUM, CRC</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-iot','HDR,TEMP')">❌ HDR, TEMP (sin CRC)</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-iot','TEMP,CRC')">❌ TEMP, CRC (sin HDR)</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-iot','CRC')">❌ Solo CRC</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="input-iot" placeholder="Ej: HDR, TEMP, HUM, CRC" autocomplete="off">
+                <button class="validate-btn" onclick="validate('iot', 'input-iot')">Validar</button>
+            </div>
+            <div id="result-iot" class="result"></div>
+        </section>
+
+        <!-- ========== EJERCICIO 8: Bioinformática ========== -->
+        <section id="bio" class="tab-content">
+            <h2>Reconocimiento de Secuencias Genéticas</h2>
+            <p class="description">Patrón: <code>K G X* F</code></p>
+
+            <div class="diagram-card">
+                <h3>Diagrama AFD</h3>
+                <div class="svg-wrapper" id="diagram-bio"></div>
+            </div>
+
+            <details class="tables-details">
+                <summary>Ver Tablas de Transición (8)</summary>
+                <div class="tables-row">
+                    <div class="table-card">
+                        <h3>Tabla AFND</h3>
+                        <table>
+                            <thead><tr><th></th><th>K</th><th>G</th><th>X</th><th>F</th></tr></thead>
+                            <tbody>
+                                <tr><th class="row-header">→ q0</th><td>{q1}</td><td>∅</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">q1</th><td>∅</td><td>{q2}</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">q2</th><td>∅</td><td>∅</td><td>{q3}</td><td>{q4}</td></tr>
+                                <tr><th class="row-header">q3</th><td>∅</td><td>∅</td><td>{q3}</td><td>{q4}</td></tr>
+                                <tr class="accept-row"><th class="row-header accept-header">* q4</th><td>∅</td><td>∅</td><td>∅</td><td>∅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-card">
+                        <h3>Tabla AFD</h3>
+                        <table>
+                            <thead><tr><th></th><th>K</th><th>G</th><th>X</th><th>F</th></tr></thead>
+                            <tbody>
+                                <tr><th class="row-header">→ A</th><td>B</td><td>∅</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">B</th><td>∅</td><td>C</td><td>∅</td><td>∅</td></tr>
+                                <tr><th class="row-header">C</th><td>∅</td><td>∅</td><td>D</td><td>E</td></tr>
+                                <tr><th class="row-header">D</th><td>∅</td><td>∅</td><td>D</td><td>E</td></tr>
+                                <tr class="accept-row"><th class="row-header accept-header">* E</th><td>∅</td><td>∅</td><td>∅</td><td>∅</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </details>
+
+            <div class="examples-section">
+                <h3>Ejemplos</h3>
+                <div class="examples-grid">
+                    <button class="example-btn valid-example" onclick="setExample('input-bio','K,G,F')">✅ K, G, F</button>
+                    <button class="example-btn valid-example" onclick="setExample('input-bio','K,G,X,F')">✅ K, G, X, F</button>
+                    <button class="example-btn valid-example" onclick="setExample('input-bio','K,G,X,X,X,F')">✅ K, G, X×3, F</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-bio','K,G,X')">❌ K, G, X (sin F)</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-bio','G,F')">❌ G, F (sin K)</button>
+                    <button class="example-btn invalid-example" onclick="setExample('input-bio','K,F')">❌ K, F (sin G)</button>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <input type="text" id="input-bio" placeholder="Ej: K, G, X, F" autocomplete="off">
+                <button class="validate-btn" onclick="validate('bio', 'input-bio')">Validar</button>
+            </div>
+            <div id="result-bio" class="result"></div>
+        </section>
+    </main>
+
+    <!-- Marcadores SVG globales para animación de diagramas -->
+    <svg style="width:0;height:0;position:absolute;overflow:hidden" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+            <marker id="arr"        viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><polygon points="0 0,10 5,0 10" fill="#8fa3bf"/></marker>
+            <marker id="arr-active" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><polygon points="0 0,10 5,0 10" fill="#f59e0b"/></marker>
+            <marker id="arr-accept" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><polygon points="0 0,10 5,0 10" fill="#10b981"/></marker>
+            <marker id="arr-reject" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><polygon points="0 0,10 5,0 10" fill="#ef4444"/></marker>
+            <marker id="arr-done"   viewBox="0 0 10 10" refX="9" refY="5" markerWidth="10" markerHeight="10" markerUnits="userSpaceOnUse" orient="auto"><polygon points="0 0,10 5,0 10" fill="#475569"/></marker>
+        </defs>
+    </svg>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
